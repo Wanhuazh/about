@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文档中心</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* 左侧文档导航 */
+        .docs-nav {
+            width: 280px;
+            background-color: #f8f9fa;
+            padding: 2rem;
+            border-right: 1px solid #dee2e6;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .docs-nav h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #212529;
+        }
+
+        .docs-nav ul {
+            list-style: none;
+        }
+
+        .docs-nav li {
+            margin-bottom: 0.5rem;
+        }
+
+        .docs-nav a {
+            color: #495057;
+            text-decoration: none;
+            display: block;
+            padding: 0.25rem 0;
+        }
+
+        .docs-nav a:hover {
+            color: #007bff;
+        }
+
+        .docs-nav a.active {
+            color: #007bff;
+            font-weight: 500;
+        }
+
+        /* 主内容区域 */
+        .main-content {
+            margin-left: 280px;
+            margin-right: 280px;
+            padding: 2rem;
+            max-width: 800px;
+            flex: 1;
+        }
+
+        /* 右侧目录导航 */
+        .toc {
+            width: 280px;
+            background-color: #f8f9fa;
+            padding: 2rem;
+            border-left: 1px solid #dee2e6;
+            position: fixed;
+            right: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .toc h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #212529;
+        }
+
+        .toc ul {
+            list-style: none;
+        }
+
+        .toc li {
+            margin-bottom: 0.5rem;
+        }
+
+        .toc a {
+            color: #495057;
+            text-decoration: none;
+            display: block;
+            padding: 0.25rem 0;
+            font-size: 0.9rem;
+        }
+
+        .toc a:hover {
+            color: #007bff;
+        }
+
+        .toc .submenu {
+            padding-left: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        /* 内容样式 */
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #212529;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+            color: #212529;
+            padding-top: 1rem;
+            border-top: 1px solid #dee2e6;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            margin: 1.5rem 0 1rem;
+            color: #212529;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+        }
+
+        .version {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 1200px) {
+            .toc {
+                display: none;
+            }
+            .main-content {
+                margin-right: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .docs-nav {
+                display: none;
+            }
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 左侧文档导航 -->
+    <div class="docs-nav">
+        <h2>文档</h2>
+        <ul>
+            <li><a href="privacy-policy.html" class="active">申请IPBE（IP封禁豁免）的具体方法（网站）</a></li>
+            <li><a href="code-of-conduct.html">申请IPBE（IP封禁豁免）的具体方法（邮件）</a></li>
+            <li><a href="terms-of-service.html">如何制作pywikibot</a></li>
+        </ul>
+    </div>
+
+    <!-- 主内容区域 -->
+    <div class="main-content">
+        <h1>文档标题</h1>
+        <p class="version">版本：YYYY-MM-DD</p>
+
+        <!-- 在这里添加文档内容 -->
+        <h2 id="section-1">1. 第一部分</h2>
+        <p>这里是第一部分的内容...</p>
+
+        <h2 id="section-2">2. 第二部分</h2>
+        <p>这里是第二部分的内容...</p>
+
+        <h3 id="section-2-1">2.1 子部分</h3>
+        <p>这里是子部分的内容...</p>
+    </div>
+
+    <!-- 右侧目录导航 -->
+    <div class="toc">
+        <h2>目录</h2>
+        <ul>
+            <li><a href="#section-1">1. 第一部分</a></li>
+            <li>
+                <a href="#section-2">2. 第二部分</a>
+                <ul class="submenu">
+                    <li><a href="#section-2-1">2.1 子部分</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        // 自动生成目录
+        document.addEventListener('DOMContentLoaded', function() {
+            const toc = document.querySelector('.toc ul');
+            const headings = document.querySelectorAll('.main-content h2, .main-content h3');
+            
+            toc.innerHTML = '';
+            headings.forEach(heading => {
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.href = '#' + heading.id;
+                a.textContent = heading.textContent;
+                
+                if (heading.tagName === 'H3') {
+                    li.style.paddingLeft = '1rem';
+                }
+                
+                li.appendChild(a);
+                toc.appendChild(li);
+            });
+        });
+
+        // 高亮当前活动链接
+        document.addEventListener('scroll', function() {
+            const headings = document.querySelectorAll('.main-content h2, .main-content h3');
+            const tocLinks = document.querySelectorAll('.toc a');
+            
+            let currentHeading = '';
+            headings.forEach(heading => {
+                const rect = heading.getBoundingClientRect();
+                if (rect.top <= 100) {
+                    currentHeading = heading.id;
+                }
+            });
+            
+            tocLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + currentHeading) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+    <footer>
+        <a href="https://github.com/ArchLinuxCN/ArchLinuxCN.github.io">关于我们</a> 
+        <br>
+        <p>本站的全部文字在<a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank">知识共享 署名-相同方式共享 4.0协议</a>之条款下提供</p>
+        <p >本站独立于维基媒体基金会（WMF）</p>
+    </footer>
+</body>
+</html> 
